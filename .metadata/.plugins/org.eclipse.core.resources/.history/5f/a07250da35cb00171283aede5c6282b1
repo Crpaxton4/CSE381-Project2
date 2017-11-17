@@ -1,0 +1,28 @@
+
+public class Algorithm_3 extends MutualExclusion {
+	private volatile int turn;
+	private volatile boolean[] flag = new boolean[2]; // Mutex Lock for the two threads. If flag[n] == true then thread n has the mutex
+
+	public Algorithm_3() {
+		flag[0] = false;
+		flag[1] = false;
+		turn = TURN_0;
+	}
+
+	public void enteringCriticalSection(int t) {
+		System.out.println(t + " entering critical Section");
+		int other;
+		other = 1 - t; // switch the 
+		flag[t] = true; // Logging that this thread is locking the mutex
+		turn = other;
+		
+		while (flag[other] == true && (turn == other)) // Wait while the other thread has the Mutex Locked
+			Thread.yield();
+		
+		// Now, only thread t has the Mutex Locked
+	}
+
+	public void leavingCriticalSection(int t) {
+		flag[t] = false; // Flag that this thread no longer has the Mutex Locked
+	}
+}

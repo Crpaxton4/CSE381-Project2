@@ -1,0 +1,33 @@
+import java.util.*;
+
+public class MessageQueue {
+	
+	private Vector<Object> queue; // Added Object type generic to get rid of the warnings. Not really Necessary, but cleaner imo
+	
+	public MessageQueue() {
+		queue = new Vector<Object>();
+	}
+
+	// The meaning of send and recieve are in th econtext of the client and appear reversed in the context of the server
+	
+	public void send(Object item) {
+		// Server is sent a new element for the queue
+		queue.addElement(item);
+	}
+
+	public Object receive() {
+		// The Client recieves the oldest element from the server
+		// (queue = FIFO)
+		
+		Object item;
+		if (queue.size() == 0)
+			return null;
+		else {
+			item = queue.firstElement();
+			queue.removeElementAt(0);
+			return item;
+		}
+	}
+
+	
+}

@@ -1,0 +1,25 @@
+
+public abstract class MutualExclusion {
+	public abstract void enteringCriticalSection(int t);
+
+	public abstract void leavingCriticalSection(int t);
+
+	public static final int TURN_0 = 0;
+	public static final int TURN_1 = 1;
+	private static final int TIME = 3000;
+
+	public static void criticalSection() { // The method the thread executes after locking the Mutex
+		try {
+			Thread.sleep((int) (Math.random() * TIME));
+		} catch (InterruptedException e) {
+		}
+	}
+
+	public static void nonCriticalSection() {
+		System.out.println("NONCRITICALSECTION");
+		try {
+			Thread.sleep((int) (Math.random() * TIME));
+		} catch (InterruptedException e) {
+		}
+	}
+}

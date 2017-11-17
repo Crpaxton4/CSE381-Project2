@@ -1,0 +1,25 @@
+
+public class Worker extends Thread {
+	private String name;
+	private int id;
+	private MutualExclusion shared;
+
+	public Worker(String n, int i, MutualExclusion s) {
+		name = n;
+		id = i;
+		shared = s;
+	}
+
+	public void run() {
+		while (true) {
+			shared.enteringCriticalSection(id); // Attempt to lock the Mutex
+			System.out.println(name + " is in critical section"); // Has Locked the Mutex
+			MutualExclusion.criticalSection(); // Method that i executed when the Mutex is locked
+
+			shared.leavingCriticalSection(id);
+			System.out.println(name + " is out of critical section");
+			MutualExclusion.nonCriticalSection(); // Action when the Mutex is no longer locked
+		}
+	}
+
+}
